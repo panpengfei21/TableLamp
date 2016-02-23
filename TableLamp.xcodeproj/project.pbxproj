@@ -12,6 +12,9 @@
 		4D3E1A9B1C7AA012008BD632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D3E1A991C7AA012008BD632 /* Main.storyboard */; };
 		4D3E1A9D1C7AA012008BD632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D3E1A9C1C7AA012008BD632 /* Assets.xcassets */; };
 		4D3E1AA01C7AA012008BD632 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D3E1A9E1C7AA012008BD632 /* LaunchScreen.storyboard */; };
+		4D3E1AA81C7AA031008BD632 /* TableLamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3E1AA71C7AA031008BD632 /* TableLamp.swift */; };
+		4D3E1AAA1C7AA834008BD632 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3E1AA91C7AA834008BD632 /* AVFoundation.framework */; };
+		4D3E1AAC1C7AD9C6008BD632 /* SetupTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3E1AAB1C7AD9C5008BD632 /* SetupTimerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		4D3E1A9C1C7AA012008BD632 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D3E1A9F1C7AA012008BD632 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D3E1AA11C7AA012008BD632 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D3E1AA71C7AA031008BD632 /* TableLamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableLamp.swift; sourceTree = "<group>"; };
+		4D3E1AA91C7AA834008BD632 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4D3E1AAB1C7AD9C5008BD632 /* SetupTimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupTimerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D3E1AAA1C7AA834008BD632 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +45,7 @@
 		4D3E1A891C7AA012008BD632 = {
 			isa = PBXGroup;
 			children = (
+				4D3E1AA91C7AA834008BD632 /* AVFoundation.framework */,
 				4D3E1A941C7AA012008BD632 /* TableLamp */,
 				4D3E1A931C7AA012008BD632 /* Products */,
 			);
@@ -54,8 +62,10 @@
 		4D3E1A941C7AA012008BD632 /* TableLamp */ = {
 			isa = PBXGroup;
 			children = (
+				4D3E1AA71C7AA031008BD632 /* TableLamp.swift */,
 				4D3E1A951C7AA012008BD632 /* AppDelegate.swift */,
 				4D3E1A971C7AA012008BD632 /* ViewController.swift */,
+				4D3E1AAB1C7AD9C5008BD632 /* SetupTimerViewController.swift */,
 				4D3E1A991C7AA012008BD632 /* Main.storyboard */,
 				4D3E1A9C1C7AA012008BD632 /* Assets.xcassets */,
 				4D3E1A9E1C7AA012008BD632 /* LaunchScreen.storyboard */,
@@ -96,6 +106,7 @@
 				TargetAttributes = {
 					4D3E1A911C7AA012008BD632 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = J6U44BK2XS;
 					};
 				};
 			};
@@ -135,7 +146,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D3E1AA81C7AA031008BD632 /* TableLamp.swift in Sources */,
 				4D3E1A981C7AA012008BD632 /* ViewController.swift in Sources */,
+				4D3E1AAC1C7AD9C6008BD632 /* SetupTimerViewController.swift in Sources */,
 				4D3E1A961C7AA012008BD632 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,10 +260,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = TableLamp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PPF.TableLamp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -258,10 +277,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = TableLamp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PPF.TableLamp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

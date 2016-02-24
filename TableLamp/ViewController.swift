@@ -42,6 +42,14 @@ class ViewController: UIViewController {
         didSet{
             torchLevelS.setValue(currentLampLevel, animated: true)
             tableLamp.torchLevel = currentLampLevel
+            if currentLampLevel == 0.0{
+                lampTurnOff = nil
+                //开启自动锁屏
+                UIApplication.sharedApplication().idleTimerDisabled = false
+            }else{
+                //关闭自动锁屏
+                UIApplication.sharedApplication().idleTimerDisabled = true
+            }
         }
     }
     
@@ -53,47 +61,41 @@ class ViewController: UIViewController {
         tableLamp = TableLamp()
         
         timer = NSTimer(timeInterval: 1, target: self, selector: Selector("updateTime:"), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)        
+        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }
     override func viewWillAppear(animated: Bool) {
+        print("\(__FUNCTION__)")
         super.viewWillAppear(animated)
-        //关闭自动锁屏
-        UIApplication.sharedApplication().idleTimerDisabled = true
         updateTimeUI()
     }
     override func viewWillDisappear(animated: Bool) {
+        print("\(__FUNCTION__)")
         //开启自动锁屏
-        UIApplication.sharedApplication().idleTimerDisabled = false
+        if UIApplication.sharedApplication().idleTimerDisabled {
+            UIApplication.sharedApplication().idleTimerDisabled = false
+        }
         super.viewWillDisappear(animated)
+        
     }
     
     // 设备支持的方向，这个要和General 里的 device orientation 里的四个选项配合使用
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.All
     }
-
+    
     // MARK: - action
     @IBAction func lampToggle(sender: UIButton) {
-        if tableLamp.lampToggle{
-            tableLamp.lampToggle = false
-            torchLevelS.setValue(0, animated: true)
-            lampTurnOff = nil
+        if currentLampLevel == 0{
+            currentLampLevel = 0.1
         }else{
-            tableLamp.torchLevel = 0.1
+            currentLampLevel = 0.0
         }
     }
     
     // 调节台灯的亮度
     @IBAction func lampSliderAction(sender: UISlider) {
         torchLevelL.text = String(format: "台灯亮度:%.2f", sender.value)
-        
-        if sender.value == 0 {
-            tableLamp.lampToggle = false
-            lampTurnOff = nil
-        }else if sender.value == 1.0{
-        }else{
-            tableLamp.torchLevel = sender.value
-        }
+        currentLampLevel = sender.value
     }
 
     @IBAction func setupTurnOffTime(sender: AnyObject) {
@@ -126,8 +128,8 @@ class ViewController: UIViewController {
     private func updateTimeUI(){
         let calender = NSCalendar.currentCalendar()
         let components = calender.components([NSCalendarUnit.Hour,NSCalendarUnit.Minute,NSCalendarUnit.Second], fromDate: NSDate())
-        timeHourL.text   = components.hour < 10 ? "0\(components.hour)" : "\(components.hour)"
-        timeMinuteL.text =  components.minute < 10 ? "0\(components.minute)" : "\(components.minute)"
+        timeHourL.text   = components.hour < 10   ? "0\(components.hour)"   : "\(components.hour)"
+        timeMinuteL.text = components.minute < 10 ? "0\(components.minute)" : "\(components.minute)"
         timeSecondL.text = components.second < 10 ? "0\(components.second)" : "\(components.second)"
         
         if let d = lampTurnOff{

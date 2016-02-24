@@ -8,7 +8,8 @@
 
 import AVFoundation
 
-class TableLamp{
+
+class TableLamp:NSObject{
 
     /// 总控
     private let session:AVCaptureSession
@@ -24,6 +25,8 @@ class TableLamp{
             return device.torchMode == AVCaptureTorchMode.On
         }
     }
+    
+    var fd:Bool = false
     
     /// 台灯的亮度的大小
     var torchLevel:Float = 0.0 {
@@ -42,10 +45,11 @@ class TableLamp{
      
      - returns: 如果不能加灯光，则返回nil
      */
-    init?(){
+    init?(_:Void){
         session = AVCaptureSession()
         device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-        
+        super.init()
+
         // 配制
         session.beginConfiguration()
         defer{
@@ -63,7 +67,9 @@ class TableLamp{
             print("init Table Lamp`s session is error:\(error)")
             return nil
         }
+        
     }
+    
     
     /**
      台灯开关
@@ -86,18 +92,26 @@ class TableLamp{
      - parameter level: 台灯的亮度的数据 范围 0.0 － 1.0 内, warnning:不能设为0.0 或 1.0，不支持。
      */
     private func setTorchLevel(level:Float){
+        guard level >= 0.0 && level < 1.0 else{
+            return
+        }
         guard (try? device.lockForConfiguration()) != nil else{
             print("device.lockFor configuration has error")
             return
         }
+
         defer {
             device.unlockForConfiguration()
         }
         
-        do{
-            try device.setTorchModeOnWithLevel(level)
-        }catch let error as NSError{
-            print("setTorchModeOnWithLevel as error:\(error)")
+        if level == 0 {
+            device.torchMode = AVCaptureTorchMode.Off
+        }else{
+            do{
+                try device.setTorchModeOnWithLevel(level)
+            }catch let error as NSError{
+                print("setTorchModeOnWithLevel as error:\(error)")
+            }
         }
     }
 }
